@@ -1,0 +1,4 @@
+suites:
+  translit_suites:
+    namespace: Denismitr\Translit
+    psr4_prefix: Denismitr\Translit

@@ -1,0 +1,26 @@
+{
+    "name": "denismitr/translit",
+    "description": "Russian-English Yandex transliteration package for making slugs",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Denis Mitrofanov",
+            "email": "denis.mitr@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Denismitr\\Translit\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^3.0"
+    }
+}
