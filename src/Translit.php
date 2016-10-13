@@ -17,14 +17,20 @@ class Translit
         $this->dictionary = require(
             dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'dictionary.php'
         );
+
+        if ( ! empty($this->text) ) {
+            $this->sanitize();
+        }
     }
 
     public function getSlug()
     {
-        $this->useDictionary();
-        $this->clearWhiteSpaces();
-        $this->clearSpecialCharacters();
+        return substr($this->translit, 0, 255);
+    }
 
+
+    public function getTranslit()
+    {
         return $this->translit;
     }
 
@@ -32,6 +38,10 @@ class Translit
     public function forString($text)
     {
         $this->text = $text;
+
+        if ( ! empty($this->text) ) {
+            $this->sanitize();
+        }
 
         return $this;
     }
@@ -54,6 +64,14 @@ class Translit
 
             $this->translit .= $this->translateLetter($current, $previous, $next);
         }
+    }
+
+
+    protected function sanitize()
+    {
+        $this->useDictionary();
+        $this->clearWhiteSpaces();
+        $this->clearSpecialCharacters();
     }
 
     protected function translateLetter($current, $previous = null, $next = null)

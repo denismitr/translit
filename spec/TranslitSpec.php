@@ -79,12 +79,19 @@ class TranslitSpec extends ObjectBehavior
     function it_translits_long_frases()
     {
         $this->forString("Лауреатом Нобелевской премии по литературе в 2016 г. стал американский музыкант и автор-исполнитель Боб Дилан. Он получил награду «за создание новых поэтических выражений в рамках американской песенной традиции».");
-        $this->getSlug()->shouldReturn("laureatom-nobelevskoj-premii-po-literature-v-2016-g-stal-amerikanskij-muzykant-i-avtor-ispolnitel-bob-dilan-on-poluchil-nagradu-za-sozdanie-novyh-poehticheskih-vyrazhenij-v-ramkah-amerikanskoj-pesennoj-tradicii");
+        $this->getTranslit()->shouldReturn("laureatom-nobelevskoj-premii-po-literature-v-2016-g-stal-amerikanskij-muzykant-i-avtor-ispolnitel-bob-dilan-on-poluchil-nagradu-za-sozdanie-novyh-poehticheskih-vyrazhenij-v-ramkah-amerikanskoj-pesennoj-tradicii");
 
         $this->forString("Пресс-секретарь президента России Дмитрий Песков рассказал, что Владимиру Путину сообщили о публикациях в СМИ о нападении на дочь бойца смешанных стилей Федора Емельяненко. Российская газета 13:50");
-        $this->getSlug()->shouldReturn('press-sekretar-prezidenta-rossii-dmitrij-peskov-rasskazal-chto-vladimiru-putinu-soobshchili-o-publikaciyah-v-smi-o-napadenii-na-doch-bojca-smeshannyh-stilej-fedora-emelyanenko-rossijskaya-gazeta-13-50');
+        $this->getTranslit()->shouldReturn('press-sekretar-prezidenta-rossii-dmitrij-peskov-rasskazal-chto-vladimiru-putinu-soobshchili-o-publikaciyah-v-smi-o-napadenii-na-doch-bojca-smeshannyh-stilej-fedora-emelyanenko-rossijskaya-gazeta-13-50');
 
         $this->forString("В сервисе есть мощный инструмент для создания списков подписчиков как по простым, так и по невероятно сложным сценариям. Например, можно легко выделить тех, кто не открыл ни одно ваше письмо или тех, кто ни разу не кликнул по ссылкам. Можно найти всех подписчиков на яндексе и выделить их в отдельный список. В общем, в зависимости от того, какие данные о подписчике вы собираете, можно формировать очень точные выборки и сегменты подписчиков. И делается это все очень просто и быстро.");
-        $this->getSlug()->shouldReturn('v-servise-est-moshchnyj-instrument-dlya-sozdaniya-spiskov-podpischikov-kak-po-prostym-tak-i-po-neveroyatno-slozhnym-scenariyam-naprimer-mozhno-legko-vydelit-tekh-kto-ne-otkryl-ni-odno-vashe-pismo-ili-tekh-kto-ni-razu-ne-kliknul-po-ssylkam-mozhno-najti-vsekh-podpischikov-na-yandekse-i-vydelit-ih-v-otdelnyj-spisok-v-obshchem-v-zavisimosti-ot-togo-kakie-dannye-o-podpischike-vy-sobiraete-mozhno-formirovat-ochen-tochnye-vyborki-i-segmenty-podpischikov-i-delaetsya-ehto-vse-ochen-prosto-i-bystro');
+        $this->getTranslit()->shouldReturn('v-servise-est-moshchnyj-instrument-dlya-sozdaniya-spiskov-podpischikov-kak-po-prostym-tak-i-po-neveroyatno-slozhnym-scenariyam-naprimer-mozhno-legko-vydelit-tekh-kto-ne-otkryl-ni-odno-vashe-pismo-ili-tekh-kto-ni-razu-ne-kliknul-po-ssylkam-mozhno-najti-vsekh-podpischikov-na-yandekse-i-vydelit-ih-v-otdelnyj-spisok-v-obshchem-v-zavisimosti-ot-togo-kakie-dannye-o-podpischike-vy-sobiraete-mozhno-formirovat-ochen-tochnye-vyborki-i-segmenty-podpischikov-i-delaetsya-ehto-vse-ochen-prosto-i-bystro');
+    }
+
+
+    function it_can_limit_the_output_to_255_chars_on_get_slug_call()
+    {
+        $this->forString("В сервисе есть мощный инструмент для создания списков подписчиков как по простым, так и по невероятно сложным сценариям. Например, можно легко выделить тех, кто не открыл ни одно ваше письмо или тех, кто ни разу не кликнул по ссылкам. Можно найти всех подписчиков на яндексе и выделить их в отдельный список. В общем, в зависимости от того, какие данные о подписчике вы собираете, можно формировать очень точные выборки и сегменты подписчиков. И делается это все очень просто и быстро.");
+        $this->getSlug()->shouldMatch('/^[\w-]{1,255}$/');
     }
 }
