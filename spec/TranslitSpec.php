@@ -71,6 +71,9 @@ class TranslitSpec extends ObjectBehavior
         $this->forString("СМИ узнали о планах России `взимать` 'плату' ~за \пересечение /границы");
         $this->getSlug()->shouldReturn('smi-uznali-o-planah-rossii-vzimat-platu-za-peresechenie-granicy');
 
+        $this->forString("Строка для транслитерации, по правилам Яндекса!");
+        $this->getSlug()->shouldReturn('stroka-dlya-transliteracii-po-pravilam-yandeksa');
+
         $this->forString('Путин, Меркель и /О/лланд :!обсудили? встречу в «нормандском формате»');
         $this->getSlug()->shouldReturn('putin-merkel-i-olland-obsudili-vstrechu-v-normandskom-formate');
     }
@@ -93,5 +96,18 @@ class TranslitSpec extends ObjectBehavior
     {
         $this->forString("В сервисе есть мощный инструмент для создания списков подписчиков как по простым, так и по невероятно сложным сценариям. Например, можно легко выделить тех, кто не открыл ни одно ваше письмо или тех, кто ни разу не кликнул по ссылкам. Можно найти всех подписчиков на яндексе и выделить их в отдельный список. В общем, в зависимости от того, какие данные о подписчике вы собираете, можно формировать очень точные выборки и сегменты подписчиков. И делается это все очень просто и быстро.");
         $this->getSlug()->shouldMatch('/^[\w-]{1,255}$/');
+    }
+
+    function it_can_limit_the_output_to_120_chars_on_get_slug_call()
+    {
+        $this->forString("В сервисе есть мощный инструмент для создания списков подписчиков как по простым, так и по невероятно сложным сценариям. Например, можно легко выделить тех, кто не открыл ни одно ваше письмо или тех, кто ни разу не кликнул по ссылкам. Можно найти всех подписчиков на яндексе и выделить их в отдельный список. В общем, в зависимости от того, какие данные о подписчике вы собираете, можно формировать очень точные выборки и сегменты подписчиков. И делается это все очень просто и быстро.");
+        $this->setMaxLength(120);
+        $this->getSlug()->shouldMatch('/^[\w-]{1,120}$/');
+    }
+
+    function it_can_limit_the_output_to_10_chars_via_construct_on_get_slug_call()
+    {
+        $this->beConstructedWith('Россия завершила поставку зенитных ракетных систем С-300 в Иран', 10);
+        $this->getSlug()->shouldMatch('/^[\w-]{1,10}$/');
     }
 }

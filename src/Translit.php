@@ -10,9 +10,13 @@ class Translit
 
     protected $translit = '';
 
-    public function __construct(String $text = '')
+    protected $maxLength;
+
+    public function __construct(String $text = '', $maxLength = 255)
     {
         $this->text = $text;
+
+        $this->maxLength = is_int($maxLength) ? $maxLength : 255;
 
         $this->dictionary = require(
             dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'dictionary.php'
@@ -23,9 +27,18 @@ class Translit
         }
     }
 
+    public function setMaxLength($value)
+    {
+        if (is_int($value)) {
+            $this->maxLength = $value;
+        }
+
+        return $this;
+    }
+
     public function getSlug()
     {
-        return substr($this->translit, 0, 255);
+        return substr($this->translit, 0, $this->maxLength);
     }
 
 
