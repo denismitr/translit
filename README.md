@@ -33,5 +33,5 @@ $slug = (new \Denismitr\Translit\Translit)->forString("длинный текст
 ```
 or second parameter of Translit class constructor like this:
 ```php
-$translit = new Translit("some long text...", 200); //will cut the slug to 200 chars
+$translit = new Translit("some very very long text...", 20); //will cut the slug to 20 chars
 ```
