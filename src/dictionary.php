@@ -1,5 +1,8 @@
 <?php
 
+//The dictionary
+//Double arrays where rules vary depending from prev or next letters
+
 return [
     'а' => 'a',
     'б' => 'b',

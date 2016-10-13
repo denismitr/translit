@@ -12,21 +12,32 @@ class Translit
 
     protected $maxLength;
 
+
     public function __construct(String $text = '', $maxLength = 255)
     {
         $this->text = $text;
 
         $this->maxLength = is_int($maxLength) ? $maxLength : 255;
 
+        //Load the dictionary
         $this->dictionary = require(
             dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'dictionary.php'
         );
+
+        //Translate
+        $this->useDictionary();
 
         if ( ! empty($this->text) ) {
             $this->sanitize();
         }
     }
 
+    /**
+     * Set the max length of the slug
+     *
+     * @param $value
+     * @return $this
+     */
     public function setMaxLength($value)
     {
         if (is_int($value)) {
@@ -36,21 +47,38 @@ class Translit
         return $this;
     }
 
+    /**
+     * Get the slug no longer than maxLength
+     *
+     * @return mixed
+     */
     public function getSlug()
     {
         return substr($this->translit, 0, $this->maxLength);
     }
 
-
+    /**
+     * Get uncut translited string
+     *
+     * @return string
+     */
     public function getTranslit()
     {
         return $this->translit;
     }
 
-
+    /**
+     * Sets text to translate
+     *
+     * @param $text
+     * @return $this
+     */
     public function forString($text)
     {
         $this->text = $text;
+
+        //Translate
+        $this->useDictionary();
 
         if ( ! empty($this->text) ) {
             $this->sanitize();
@@ -59,11 +87,17 @@ class Translit
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDictionary()
     {
         return $this->dictionary;
     }
 
+    /**
+     * Works with dictionary to translate text
+     */
     protected function useDictionary()
     {
         $this->translit = '';
@@ -79,14 +113,23 @@ class Translit
         }
     }
 
-
+    /**
+     * Calls methods to sanitize the output
+     */
     protected function sanitize()
     {
-        $this->useDictionary();
         $this->clearWhiteSpaces();
         $this->clearSpecialCharacters();
     }
 
+    /**
+     * Works with every single letter comparing it with dictionary
+     *
+     * @param $current
+     * @param null $previous
+     * @param null $next
+     * @return mixed
+     */
     protected function translateLetter($current, $previous = null, $next = null)
     {
         if ( array_key_exists($current, $this->dictionary) ) {
@@ -100,7 +143,16 @@ class Translit
         return $current;
     }
 
-
+    /**
+     * Special cases where dictionary array contains sub arrays of additional rules
+     *
+     * @param $letter
+     * @param array $subArray
+     * @param $previous
+     * @param $current
+     * @param $next
+     * @return mixed
+     */
     protected function specialCase($letter, array $subArray, $previous, $current, $next)
     {
         if ($previous) {
@@ -132,7 +184,9 @@ class Translit
         return $letter;
     }
 
-
+    /**
+     * Cuts all special chars or double dashes
+     */
     protected function clearSpecialCharacters()
     {
         // Remove all characters but words, numbers and dashes
@@ -142,6 +196,9 @@ class Translit
         $this->translit = preg_replace('/--+/', '-', $this->translit);
     }
 
+    /**
+     * Clears whitespaces
+     */
     protected function clearWhiteSpaces()
     {
         $this->translit = str_replace(' ', '-', $this->translit);
