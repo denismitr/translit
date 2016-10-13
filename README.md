@@ -1,10 +1,10 @@
 # Yandex-standard russian-english transliteration
 
 ##Version
-0.1.5
+1.6.2
 
 ## Author
-Denis Mitrofanov
+Denis Mitrofanov <denis.mitr@gmail.com>
 [TheCollection](https://thecollection.ru)
 
 ## Installation
