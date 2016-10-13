@@ -45,11 +45,11 @@ class Translit
     {
         $this->translit = '';
 
-        $text = mb_strtolower($this->text);
+        $text = mb_strtolower($this->text, 'UTF-8');
 
-        for($ii = 0, $len = mb_strlen($text); $ii < $len; $ii++) {
+        for($ii = 0, $len = mb_strlen($text, 'UTF-8'); $ii < $len; $ii++) {
             $current = mb_substr($text, $ii, 1);
-            $previous = ($ii > 1) ? mb_substr($text, $ii - 1, 1) : null;
+            $previous = ($ii > 0) ? mb_substr($text, $ii - 1, 1) : null;
             $next = ($ii < ($len - 1)) ? mb_substr($text, $ii + 1, 1) : null;
 
             $this->translit .= $this->translateLetter($current, $previous, $next);
@@ -72,10 +72,9 @@ class Translit
 
     protected function specialCase($letter, array $subArray, $previous, $current, $next)
     {
-        $combination = '';
-
         if ($previous) {
             $combination = $previous . $current;
+
             if ( array_key_exists($combination, $subArray) ) {
                 return $subArray[$combination];
             }
@@ -83,6 +82,7 @@ class Translit
 
         if ($next) {
             $combination = $current . $next;
+
             if ( array_key_exists($combination, $subArray) ) {
                 return $subArray[$combination];
             }
@@ -104,10 +104,11 @@ class Translit
 
     protected function clearSpecialCharacters()
     {
-        $this->translit = str_replace('«', '', $this->translit);
-        $this->translit = str_replace('»', '', $this->translit);
-        $this->translit = str_replace(',', '', $this->translit);
-        $this->translit = str_replace('.', '', $this->translit);
+        // Remove all characters but words, numbers and dashes
+        $this->translit = preg_replace('/[^\w\-]+/', '', $this->translit);
+
+        //Remove double dashes
+        $this->translit = preg_replace('/--+/', '-', $this->translit);
     }
 
     protected function clearWhiteSpaces()
