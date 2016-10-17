@@ -15,7 +15,7 @@ class Translit
 
     public function __construct(String $text = '', $maxLength = 255)
     {
-        $this->text = $text;
+        $this->text = trim($text);
 
         $this->maxLength = is_int($maxLength) ? $maxLength : 255;
 
@@ -75,7 +75,7 @@ class Translit
      */
     public function forString($text)
     {
-        $this->text = $text;
+        $this->text = trim($text);
 
         //Translate
         $this->useDictionary();

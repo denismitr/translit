@@ -48,6 +48,12 @@ class TranslitSpec extends ObjectBehavior
         $this->getSlug()->shouldReturn('orel-devyatogo-legiona');
     }
 
+    function it_trims_the_input_string_()
+    {
+        $this->forString(' Ведущие сайты объявлений! Точный подбор для любой тематики! Эффективно! ');
+        $this->getSlug()->shouldReturn('vedushchie-sajty-obyavlenij-tochnyj-podbor-dlya-lyuboj-tematiki-ehffektivno');
+    }
+
     function it_can_deal_with_h_kh_complexities()
     {
         $this->forString('сходил тухачевский под пихту в тюхал свой хер в хуйню');
