@@ -116,4 +116,11 @@ class TranslitSpec extends ObjectBehavior
         $this->beConstructedWith('Россия завершила поставку зенитных ракетных систем С-300 в Иран', 10);
         $this->getSlug()->shouldMatch('/^[\w-]{1,10}$/');
     }
+
+    function it_can_override_when_a_string_startsor_ends_with_special_symbol()
+    {
+        $this->beConstructedWith(':Times: Путин начнет атаку на Алеппо с прибытием «Адмирала Кузнецова»');
+
+        $this->getTranslit()->shouldReturn('times-putin-nachnet-ataku-na-aleppo-s-pribytiem-admirala-kuznecova');
+    }
 }

@@ -194,6 +194,9 @@ class Translit
 
         //Remove double dashes
         $this->translit = preg_replace('/--+/', '-', $this->translit);
+
+        //Remove trailing or ending collon
+        $this->translit = trim($this->translit, '-');
     }
 
     /**
