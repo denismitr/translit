@@ -20,6 +20,13 @@ class TranslitSpec extends ObjectBehavior
         $this->getSlug()->shouldBe('privet');
     }
 
+    function it_outputs_translited_slug_for_echo()
+    {
+        $this->beConstructedWith('Эхо москвы');
+
+        $this->getSlug()->shouldBe('ehkho-moskvy');
+    }
+
     function it_outputs_translited_slug_for_several_inputs()
     {
         $this->beConstructedWith('завтра');
