@@ -1,7 +1,7 @@
 # Yandex-standard russian-english transliteration
 
 ##Version
-2.1.0
+2.2.5
 
 ## Author
 Denis Mitrofanov <denis.mitr@gmail.com>
