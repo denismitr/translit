@@ -13,7 +13,7 @@ class Translit
     protected $maxLength;
 
 
-    public function __construct(String $text = '', $maxLength = 255)
+    public function __construct($text = '', $maxLength = 255)
     {
         $this->text = trim($text);
 
