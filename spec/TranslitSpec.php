@@ -124,11 +124,16 @@ class TranslitSpec extends ObjectBehavior
         ;
     }
 
-    function it_can_limit_the_output_to_10_chars_via_construct_on_get_slug_call()
+    function it_can_limit_the_output_to_some_number_of_characters()
     {
         $this
-            ->transform('Россия завершила поставку зенитных ракетных систем С-300 в Иран', 10)
-            ->shouldReturn('rossiya-za')
+            ->transform('Россия завершила поставку зенитных ракетных систем С-300 в Иран', 25)
+            ->shouldReturn('rossiya-zavershila-postav')
+        ;
+
+        $this
+            ->transform("очень длинный текст...", 10)
+            ->shouldReturn('ochen-dlin')
         ;
     }
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Denismitr\Translit;
 
 
-interface Strategy
+interface TranslitStrategy
 {
     public function translate(string $text, ?int $maxLength): string;
 }

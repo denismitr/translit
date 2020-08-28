@@ -7,12 +7,12 @@ namespace Denismitr\Translit;
 class Translit
 {
     /**
-     * @var Strategy
+     * @var TranslitStrategy
      */
     private $strategy;
 
 
-    public function __construct(Strategy $strategy = null)
+    public function __construct(TranslitStrategy $strategy = null)
     {
         if ( ! $strategy) {
             $strategy = StrategyFactory::make('dictionary');

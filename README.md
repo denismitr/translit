@@ -14,24 +14,21 @@ composer require denismitr/translit
 
 ##Usage
 ```php
-    $translit = new \Denismitr\Translit\Translit("Строка для транслитерации, по правилам Яндекс!");
+    $translit = new \Denismitr\Translit\Translit();
 
-    $slug = $translit->getSlug();
+    $slug = $translit->transform("Строка для транслитерации, по правилам Яндекс!");
     //stroka-dlya-transliteracii-po-pravilam-yandeksa
 ```
-or
-```php
-    $slug = (new \Denismitr\Translit\Translit)->forString("Привет всем!")->getSlug();
-    //privet-vsem
-```
-To process strings longer than 255 chars use getTranslit() instead of getSlug()
-that cuts max length of slug by default to 255
 
-To define your own max length of the slug use
+To define max length of the output do:
 ```php
-$slug = (new \Denismitr\Translit\Translit)->forString("длинный текст...")->setMaxLength(150)->getSlug();
+$slug = (new \Denismitr\Translit\Translit)->transform("очень длинный текст...", 10);
+// ochen-dlin
 ```
-or second parameter of Translit class constructor like this:
+
+You can provide your own translit implementation as long as it implements the 
+`\Denismitr\Translit\TranslitStrategy` interface
+and inject it into the `Translit` class constructor like so:
 ```php
-$translit = new Translit("some very very long text...", 20); //will cut the slug to 20 chars
+new \Denismitr\Translit\Translit(new YourTranslitStrategyImpl());
 ```

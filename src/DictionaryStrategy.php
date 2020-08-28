@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Denismitr\Translit;
 
 
-class DictionaryStrategy implements Strategy
+final class DictionaryStrategy implements TranslitStrategy
 {
     /**
      * @var array

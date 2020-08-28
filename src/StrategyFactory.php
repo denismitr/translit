@@ -9,7 +9,7 @@ final class StrategyFactory
 {
     private const DICTIONARY_STRATEGY = 'dictionary';
 
-    public static function make(string $translitStrategy): Strategy
+    public static function make(string $translitStrategy): TranslitStrategy
     {
         switch ($translitStrategy) {
             case self::DICTIONARY_STRATEGY:
