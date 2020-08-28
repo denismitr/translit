@@ -15,7 +15,7 @@ class Translit
     public function __construct(Strategy $strategy = null)
     {
         if ( ! $strategy) {
-            $strategy = StrategFactory::make('dictionary');
+            $strategy = StrategyFactory::make('dictionary');
         }
 
         $this->strategy = $strategy;

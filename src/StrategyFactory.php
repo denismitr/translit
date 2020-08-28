@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Denismitr\Translit;
 
 
-final class StrategFactory
+final class StrategyFactory
 {
     private const DICTIONARY_STRATEGY = 'dictionary';
 

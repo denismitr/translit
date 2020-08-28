@@ -31,15 +31,15 @@ class DictionaryStrategy implements Strategy
             return null;
         }
 
-        $parsed = $this->parse($text);
-
-        $sanitized = $this->clearSpecialCharacters($parsed);
+        $result = $this->clearSpecialCharacters(
+            $this->parse($text)
+        );
 
         if ($maxLength) {
-            return substr($sanitized, 0, $maxLength);
+            return substr($result, 0, $maxLength);
         }
 
-        return $sanitized;
+        return $result;
     }
 
     public function parse(string $text): string
