@@ -33,9 +33,9 @@ class DictionaryStrategy implements Strategy
         }
     }
 
-    public function translate(string $text, ?int $maxLength): ?string
+    public function translate(string $text, ?int $maxLength): string
     {
-        $result = $this->clearSpecialCharacters(
+        $result = $this->sanitize(
             $this->parse($text)
         );
 
@@ -65,16 +65,20 @@ class DictionaryStrategy implements Strategy
     /**
      * Works with every single letter comparing it with dictionary
      *
-     * @param $current
-     * @param null $previous
-     * @param null $next
+     * @param string $current
+     * @param string|null $previous
+     * @param string|null $next
      * @return mixed
      */
-    protected function translateLetter($current, $previous = null, $next = null)
+    protected function translateLetter(
+        string $current,
+        ?string $previous = null,
+        ?string $next = null
+    ): string
     {
         if ( array_key_exists($current, $this->dictionary) ) {
             if (is_array($this->dictionary[$current])) {
-                return $this->specialCase($current, $this->dictionary[$current], $previous, $current, $next);
+                return $this->handleSpecialCases($current, $previous, $next, $this->dictionary[$current]);
             }
 
             return $this->dictionary[$current];
@@ -86,14 +90,18 @@ class DictionaryStrategy implements Strategy
     /**
      * Special cases where dictionary array contains sub arrays of additional rules
      *
-     * @param $letter
+     * @param string $current
+     * @param string|null $previous
+     * @param string|null $next
      * @param array $subArray
-     * @param $previous
-     * @param $current
-     * @param $next
-     * @return mixed
+     * @return string
      */
-    private function specialCase($letter, array $subArray, $previous, $current, $next)
+    private function handleSpecialCases(
+        string $current,
+        ?string $previous,
+        ?string $next,
+        array $subArray
+    ): string
     {
         if ($previous) {
             $combination = $previous . $current;
@@ -121,15 +129,10 @@ class DictionaryStrategy implements Strategy
             return $subArray['*'];
         }
 
-        return $letter;
+        return $current;
     }
 
-    /**
-     * Cuts all special chars or double dashes
-     * @param string $text
-     * @return string
-     */
-    private function clearSpecialCharacters(string $text): string
+    private function sanitize(string $text): string
     {
         $noWhiteSpaces = str_replace(' ', '-', $text);
 
