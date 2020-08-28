@@ -6,7 +6,6 @@ requires PHP >= 7.2
 
 ## Author
 Denis Mitrofanov <denis.mitr@gmail.com>
-[TheCollection](https://thecollection.ru)
 
 ## Installation
 ```
