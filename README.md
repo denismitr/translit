@@ -1,7 +1,8 @@
 # Yandex-standard russian-english transliteration
 
 ##Version
-2.2.5
+3.0
+requires PHP >= 7.2
 
 ## Author
 Denis Mitrofanov <denis.mitr@gmail.com>
@@ -28,7 +29,12 @@ $slug = (new \Denismitr\Translit\Translit)->transform("очень длинный
 
 You can provide your own translit implementation as long as it implements the 
 `\Denismitr\Translit\TranslitStrategy` interface
-and inject it into the `Translit` class constructor like so:
+and inject it into the `Translit` class constructor, this way it will override the default behavior like so:
 ```php
 new \Denismitr\Translit\Translit(new YourTranslitStrategyImpl());
+```
+
+#### Run tests
+```bash
+composer test
 ```
