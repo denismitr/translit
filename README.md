@@ -1,6 +1,6 @@
 # Yandex-standard russian-english transliteration
 
-##Version
+## Version 
 3.0
 requires PHP >= 7.2
 
@@ -12,7 +12,7 @@ Denis Mitrofanov <denis.mitr@gmail.com>
 composer require denismitr/translit
 ```
 
-##Usage
+## Usage
 ```php
     $translit = new \Denismitr\Translit\Translit();
 
