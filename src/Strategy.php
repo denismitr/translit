@@ -7,5 +7,5 @@ namespace Denismitr\Translit;
 
 interface Strategy
 {
-    public function translate(?string $text, ?int $maxLength): ?string;
+    public function translate(string $text, ?int $maxLength): ?string;
 }

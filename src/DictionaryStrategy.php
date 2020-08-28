@@ -12,25 +12,29 @@ class DictionaryStrategy implements Strategy
      */
     private $dictionary;
 
+    private static $cached = [];
+
     /**
      * DictionaryStrategy constructor.
      * @param string $dictionaryPath
      */
     public function __construct(string $dictionaryPath)
     {
-        if ( ! file_exists($dictionaryPath) || ! is_readable($dictionaryPath)) {
-            throw new \InvalidArgumentException("Dictionary {$dictionaryPath} not found or cannot be loaded");
-        }
+        if (isset(static::$cached[$dictionaryPath])) {
+            $this->dictionary = static::$cached[$dictionaryPath];
+        } else {
+            if ( ! file_exists($dictionaryPath) || ! is_readable($dictionaryPath)) {
+                throw new \InvalidArgumentException("Dictionary {$dictionaryPath} not found or cannot be loaded");
+            }
 
-        $this->dictionary = require $dictionaryPath;
+            $this->dictionary = require $dictionaryPath;
+
+            static::$cached[$dictionaryPath] = $this->dictionary;
+        }
     }
 
-    public function translate(?string $text, ?int $maxLength): ?string
+    public function translate(string $text, ?int $maxLength): ?string
     {
-        if ($text === null) {
-            return null;
-        }
-
         $result = $this->clearSpecialCharacters(
             $this->parse($text)
         );
