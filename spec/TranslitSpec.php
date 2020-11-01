@@ -144,4 +144,9 @@ class TranslitSpec extends ObjectBehavior
             ->shouldReturn('times-putin-nachnet-ataku-na-aleppo-s-pribytiem-admirala-kuznecova')
         ;
     }
+
+    function it_outputs_translited_slug_for_word_containing_su()
+    {
+        $this->transform('сутки')->shouldBe('cutki');
+    }
 }
